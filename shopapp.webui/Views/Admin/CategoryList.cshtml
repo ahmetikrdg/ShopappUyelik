@@ -1,0 +1,47 @@
+@model CategoryListViewModel
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Admin Products</h1>
+        <hr>
+        <a class="btn btn-primary btn-sm" href="/admin/categories/create">Add Category</a>
+        <table class="table table-bordered">
+          <thead>
+              <td style="width:50px">Id</td>
+              <td style="width:150px">Img</td>
+              <td style="width:250px">Name</td>
+              <td style="width:50px">Erişim</td>
+
+          </thead>
+          <tbody>
+           @if(Model.Categories.Count>0)
+           {
+             @foreach (var item in Model.Categories)//her bir eleman item içinde saklansın ve yapımız her gelen ürün için tr oluşsun
+              {
+                  <tr>
+                    <td >@item.CategoryId</td>
+                    <td >@item.Name</td>
+                    <td >@item.Url</td>
+                    
+                  <td>
+                      <a class="btn btn-primary btn-sm mr-2" href="/admin/categories/@item.CategoryId">Edit</a> @*admin altındaki pructsu göstersin eğer id gelirse bu butona detay sayfasına gitsin*@
+                     
+                     <form action="/admin/CategoryDelete" method="POST" style="display: inline;">
+                                        <input type="hidden" name="categoryId" value="@item.CategoryId">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                  </td>
+              </tr>
+              }
+           }
+           else
+           {
+             <div class="alert alert-warning">
+                 <h3>No Categories</h3>
+             </div>
+           }
+          </tbody>
+        </table>
+    </div>
+</div>
